@@ -9,20 +9,21 @@ Partial Class ctrMenu
     Private Sub ctrMenu_Init(sender As Object, e As EventArgs) Handles Me.Init
         If Not Page.IsPostBack Then
             If Not Session("CodigoUsuario") Is Nothing Then
-                Dim Nome As String = ""
+                Dim Nome As String = (New ComponenteAcesso.Permissao).ObterNome(Session("CodigoUsuario"))
 
                 If Nome <> "" Then
                     Dim splitNome() As String = Nome.Split(" ")
 
-                    'lblUsuario.Text = splitNome(0)
-                    'imgFoto.ImageUrl = "img/perfil_sombra.jpg"
+                    lblUsuario.Text = splitNome(0)
+                    imgFoto.ImageUrl = "img/perfil_sombra.jpg"
                 Else
-                    'lblUsuario.Text = "Não Identificado"
+                    lblUsuario.Text = "Não Identificado"
                 End If
             Else
-                'lblUsuario.Text = "Visitante"
+                lblUsuario.Text = "Visitante"
             End If
 
+            imgFoto.ImageUrl = "frmPrincipalFotos.aspx?idPessoa=" & Session("CodigoPessoa").ToString
         End If
     End Sub
 
@@ -71,10 +72,10 @@ Partial Class ctrMenu
     End Sub
 
     'Area Ensino/CargaHoraria
-    'Private Sub lnkServidorCargaHoraria_Click(sender As Object, e As EventArgs) Handles lnkServidorCargaHoraria.Click
-    '    LimparSessao()
-    '    Session("MenuSub") = "liSubMenuApresentacao"
-    '    Response.Redirect("frmResumoServidor.aspx")
-    'End Sub
+    Private Sub lnkServidorCargaHoraria_Click(sender As Object, e As EventArgs) Handles lnkServidorCargaHoraria.Click
+        LimparSessao()
+        Session("MenuSub") = "liSubMenuApresentacao"
+        Response.Redirect("frmResumoServidor.aspx")
+    End Sub
 
 End Class

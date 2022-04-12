@@ -1,35 +1,68 @@
 ﻿<%@ Control Language="VB" AutoEventWireup="false" CodeFile="ctrTopo.ascx.vb" Inherits="ctrTopo" %>
 
-<header class="header-top" header-theme="light">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between">
-                        <div class="top-menu d-flex align-items-center">
-                            <button type="button" class="btn-icon mobile-nav-toggle d-lg-none"><span></span></button>
-                            <div class="header-search">
-                                <div class="input-group">
-                                    <span class="input-group-addon search-close"><i class="ik ik-x"></i></span>
-                                    <input type="text" class="form-control">
-                                    <!-- <span class="input-group-addon search-btn"><i class="ik ik-search"></i></span> -->
-                                </div>
-                            </div>
-                            <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
-                        </div>
-                        <div class="top-menu d-flex align-items-center">
-                          
-                            
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="img/user.jpg" alt=""></a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
-                                    <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
-                                    <a class="dropdown-item" href="#"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="ik ik-mail dropdown-icon"></i> Inbox</a>
-                                    <a class="dropdown-item" href="#"><i class="ik ik-navigation dropdown-icon"></i> Message</a>
-                                    <a class="dropdown-item" href="login.html"><i class="ik ik-power dropdown-icon"></i> Logout</a>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
+            <a href="" class="logo">
+                <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                <img src="Imagens/ico_rh_30px.png" alt="" /> <asp:Label ID="lblSistema" runat="server" Text="Recursos Humanos" />
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" >
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <asp:Image ID="imgUsuario" runat="server" class="user-image" alt="User Image"/>
+                                <span class="hidden-xs"><asp:Label ID="lblUsuario" runat="server" Text="Jane da Silva" /></span>
+                            </a>
+                            <ul class="dropdown-menu" id="divUsuario" runat="server">
+                              <!-- User image -->
+                              <li class="user-header">
+                                <asp:Image id="imgFoto" runat="server" cssclass="img-circle" alt="User Image" ImageUrl="img/Fotos/user7-128x128.jpg" />
+
+                                <p>
+                                  <asp:Label ID="lblNomeUsuario" runat="server" Text="Rh" />
+                                  <small></small>
+                                </p>
+                              </li>
+                              <!-- Menu Body -->
+<%--                              <li class="user-body">
+                                <div class="row">
+                                  <div class="col-xs-4 text-center">
+                                    <a href="#">Turmas</a>
+                                  </div>
+                                  <div class="col-xs-4 text-center">
+                                    <a href="#">Disciplinas</a>
+                                  </div>
+                                  <div class="col-xs-4 text-center">
+                                    <a href="#">Frequência</a>
+                                  </div>
+                                </div>
+                              </li>--%>
+                              <!-- Menu Footer-->
+                                <li id="liSair" runat="server"  class="user-footer">
+                                <div class="pull-left">
+                                    <asp:LinkButton ID="lnkControleAcesso" runat="server" class="btn btn-lg btn-block btn-danger" Text="Controle de Acesso"/>
+                                </div>
+                                <div class="pull-right">
+                                    <asp:LinkButton ID="lnkSair" runat="server" class="btn btn-lg btn-block btn-danger" Text="Sair"/>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-            </header>
-            
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="frmSelecaoEscola.aspx" >
+                                <span><b><asp:Label ID="lblEscola" runat="server" /></b></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>

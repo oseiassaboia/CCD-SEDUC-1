@@ -6,6 +6,32 @@ Partial Class frmResumoServidor
     Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         If Not Page.IsPostBack Then
 
+            ViewState("Permissao") = (New ComponenteAcesso.Permissao).Funcionalidade(Session("CodigoUsuario"), 1602)
+
+            If ViewState("Permissao") = 1 Then
+                btnVoltar.Enabled = False
+
+            ElseIf ViewState("Permissao") = 2 Then
+
+            Else
+                Response.Redirect("frmPrincipal.aspx")
+            End If
+
+            If Not Session("CodigoPessoaCargaHoraria") Is Nothing Then
+
+                Dim objPessoa As New Pessoa(Session("CodigoPessoaCargaHoraria"))
+
+                CarregarPerfilUsario(objPessoa.UsuarioLogin)
+
+                CarregarImagem(Session("CodigoPessoaCargaHoraria"))
+                CarregarNome(Session("CodigoPessoaCargaHoraria"))
+                CarregarHabilidadePerfil(Session("CodigoPessoaCargaHoraria"))
+                CarregarLotacoesPerfil(Session("CodigoPessoaCargaHoraria"))
+                'CarregarGrid(Session("CodigoPessoa"))
+
+                objPessoa = Nothing
+
+            End If
 
 
 

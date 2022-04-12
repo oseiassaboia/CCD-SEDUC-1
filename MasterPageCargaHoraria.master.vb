@@ -7,7 +7,7 @@ Partial Class MasterPageCargaHoraria
 
             If Session("CodigoUsuario") = 0 Or Session("CodigoUsuario") Is Nothing Then
                 Session.Abandon()
-
+                Response.Redirect("http://sistemas.educacao.ma.gov.br/acesso")
             End If
 
             If Session("CodigoPessoaCargaHoraria") Is Nothing Then

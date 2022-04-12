@@ -27,10 +27,10 @@
                         <div class='nav-tabs-custom'>
                             <ul class="nav nav-tabs">
                                 <li id="liServidor" runat="server">
-                                    <asp:LinkButton ID="lbtServidor" CssClass="form-control" runat="server">Informações do Servidor</asp:LinkButton></li>
+                                    <asp:LinkButton ID="lbtServidor" CssClass="form-control" runat="server">Servidor</asp:LinkButton></li>
                               
                                 <li id="lihabilidade" runat="server">
-                                    <asp:LinkButton ID="lbthabilidade"  runat="server">Componente Curricular</asp:LinkButton></li>
+                                    <asp:LinkButton ID="lbthabilidade"  runat="server">C. Curricular</asp:LinkButton></li>
                             </ul>
                             <div class="tab-content">
                                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />

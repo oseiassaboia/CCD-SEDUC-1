@@ -29,7 +29,7 @@
     <!-- Favicon -->
     <link rel="icon" href="../Imagens/favicon.png" type="image/x-icon" />
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="Recursos/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="Recursos/bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="Recursos/bower_components/font-awesome/css/font-awesome.min.css" />
     <!-- Ionicons -->
@@ -45,12 +45,8 @@
     <link rel="stylesheet" href="Recursos/bower_components/jvectormap/jquery-jvectormap.css" />
     <!-- Date Picker -->
     <link rel="stylesheet" href="Recursos/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
-
-
-
-
-
-    
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="Recursos/bower_components/bootstrap-daterangepicker/daterangepicker.css" />
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="Recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" />
     <link href="../Css/Personalizacao.css" rel="stylesheet" />
@@ -59,7 +55,63 @@
     <script src="js/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/832e975ac8.js" crossorigin="anonymous"></script>
 
-   
+    <style>
+        .smallfupArquivo {
+            color: gray;
+            padding: 5px;
+            font-size: 11px;
+        }
+
+        .tooltip {
+            min-width: 150px;
+        }
+
+        .content {
+            padding-bottom: 1px !important;
+            padding-top: 1px !important;
+        }
+
+        .content-header {
+            padding-bottom: 15px !important;
+        }
+
+        .loading {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 999999;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .imagem {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 1000010;
+            background: transparent url('https://sistemas.educacao.ma.gov.br/sigep/img/carregando.gif') 50% 50% no-repeat !important;
+        }
+
+        input[type=checkbox] {
+            display: inline-block;
+            vertical-align: middle;
+            width: 18px;
+            height: 18px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+            margin: 0 0 0 !important;
+        }
+
+            input[type=checkbox] + label {
+                display: inline-block;
+                max-width: 100%;
+                padding-left: 5px !important;
+                font-weight: 200;
+            }
+    </style>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <%--<body class="hold-transition skin-blue sidebar-mini">--%>
