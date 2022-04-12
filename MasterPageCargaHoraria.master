@@ -1,0 +1,94 @@
+﻿<%@ Master Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="MasterPageCargaHoraria.master.vb" Inherits="MasterPageCargaHoraria" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+      <asp:ContentPlaceHolder ID="head" runat="server" />
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+        <section class="content-header">
+        <h1>
+            <i class="fa  fa-user"></i> Servidor
+            <small>Carga Horária</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-user"></i>Recursos Humanos</li>
+            <li class="active"><i class="fa fa-list-alt"></i>Carga Horária</li>
+        </ol>
+    </section>
+
+     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+
+            <section id="Cadastro" runat="server" class="content">
+                <!-- Small boxes (Stat box) -->
+                  <div class='row'>
+                    <div class='col-sm-12'>
+                        <div class='nav-tabs-custom'>
+                            <ul class="nav nav-tabs">
+                                <li id="liServidor" runat="server">
+                                    <asp:LinkButton ID="lbtServidor" CssClass="form-control" runat="server">Informações do Servidor</asp:LinkButton></li>
+                              
+                                <li id="lihabilidade" runat="server">
+                                    <asp:LinkButton ID="lbthabilidade"  runat="server">Componente Curricular</asp:LinkButton></li>
+                            </ul>
+                            <div class="tab-content">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="Listagem" runat="server" class="content">
+                <!-- Small boxes (Stat box) -->
+                <div class='row'>
+                    <div class='col-sm-12'>
+                        <div class='box box-blue'>
+                            <div class='box-header'>
+                                <h3 class='box-title'><i class="fa fa-search"></i> Localizar Pessoa</h3>
+                            </div>
+                            <div class="box-body">
+                                <asp:Panel ID="Panel1" runat="server" DefaultButton="btnLocalizar">
+                                    <!-- Date range -->
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            CPF<br />
+                                            <asp:TextBox ID="txtCpf" runat="server"  class="form-control"  onkeyup="formataCPF(this,event);"  />
+                                        </div>
+                                        <div class="col-sm-9">
+                                            Pessoa<br />
+                                            <asp:TextBox ID="txtLocalizar" runat="server" MaxLength="100" class="form-control" />
+                                        </div>
+                                    </div>
+                                </asp:Panel>
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="btn-group">
+                                    <asp:LinkButton ID="btnLocalizar" runat="server" class="btn btn-default"><i class="fa fa-search"></i> Localizar</asp:LinkButton>
+                                </div>
+                                <div class="btn-group">
+                                    <asp:LinkButton ID="btnCadastrar" runat="server" Visible="False" class="btn btn-info"><i class="fa fa-plus"></i> Cadastrar</asp:LinkButton>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
+                                <asp:GridView ID="grdPessoa" runat="server" CssClass="table table-bordered table-hover" AllowSorting="True" AllowPaging="True" PageSize="20" PagerStyle-CssClass="paginacao" AutoGenerateColumns="False" DataKeyNames="RH01_ID_PESSOA">
+                                    <HeaderStyle CssClass="bg-aqua" ForeColor="White" />
+                                    <Columns>
+                                        <asp:ButtonField DataTextField="RH01_NU_CPF" SortExpression="RH01_NU_CPF" HeaderText="Cpf" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
+                                        <asp:ButtonField DataTextField="RH01_NM_PESSOA" SortExpression="RH01_NM_PESSOA" HeaderText="Pessoa" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
+                                        <asp:ButtonField DataTextField="RH01_DT_NASCIMENTO" SortExpression="RH01_DT_NASCIMENTO" HeaderText="Nascimento" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" DataTextFormatString="{0:dd/MM/yyyy}" />
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>
+

@@ -1,0 +1,54 @@
+﻿Imports Microsoft.VisualBasic
+
+Public Class Ferias
+
+    Private RH28_ID_FERIAS As Integer
+    Private RH87_ID_PERIODO_FERIAS As Integer
+    Private RH02_ID_SERVIDOR As Integer
+    Private CA04_ID_USUARIO As Integer
+    Private CA04_ID_USUARIO_ALT As Integer
+    Private RH28_DT_INICIO_AQUISICAO As String
+    Private RH28_DT_TERMINO_AQUISICAO As String
+    Private RH28_DT_INICIO_GOZO As String
+    Private RH28_DT_TERMINO_GOZO As String
+    Private RH28_DH_CADASTRO As String
+    Private RH28_DH_ALTERACAO As String
+
+    Public Property IdFeridas As Integer
+        Get
+            Return RH28_ID_FERIAS
+        End Get
+        Set(value As Integer)
+            RH28_ID_FERIAS = value
+        End Set
+    End Property
+
+    Public Property IdPeriodoFerias As Integer
+        Get
+            Return RH87_ID_PERIODO_FERIAS
+        End Get
+        Set(value As Integer)
+            RH87_ID_PERIODO_FERIAS = value
+        End Set
+    End Property
+
+    Public Property IdServidor As Integer
+        Get
+            Return RH02_ID_SERVIDOR
+        End Get
+        Set(value As Integer)
+            RH02_ID_SERVIDOR = value
+        End Set
+    End Property
+
+    Public Property IdUsuario As Integer
+        Get
+            Return CA04_ID_USUARIO
+        End Get
+        Set(value As Integer)
+            CA04_ID_USUARIO = value
+        End Set
+    End Property
+
+
+End Class

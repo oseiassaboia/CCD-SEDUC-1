@@ -1,0 +1,91 @@
+﻿Imports Microsoft.VisualBasic
+
+Public Class CrystalReport
+
+    Public Structure ParametroRelatorio
+        Public Titulo As String
+        Public Valor As String
+
+        Public Sub New(ByVal _Titulo As String, ByVal _Valor As String)
+            Titulo = _Titulo
+            Valor = _Valor
+        End Sub
+
+    End Structure
+
+    Public Shared Function Gerar(NomeRelatorio As String, Filtro As String, Optional Parametros As List(Of ParametroRelatorio) = Nothing) As String
+        Dim crReportDocument As New CrystalDecisions.CrystalReports.Engine.ReportDocument
+
+        Dim LoginBanco As New CrystalDecisions.Shared.TableLogOnInfo
+        Dim info As New CrystalDecisions.Shared.ConnectionInfo
+
+        Dim strDataBase As CrystalDecisions.CrystalReports.Engine.Database
+        Dim strTabela As CrystalDecisions.CrystalReports.Engine.Table
+        Dim strTabelas As CrystalDecisions.CrystalReports.Engine.Tables
+
+        Dim crDiskFileDestinationOptions As New CrystalDecisions.Shared.DiskFileDestinationOptions
+        Dim crExportOptions As CrystalDecisions.Shared.ExportOptions
+
+        Dim strStringConexao As String = (New Conexao).ConnectionString
+        Dim strArquivoDestino As String
+
+        Dim Pagina As Page = DirectCast(HttpContext.Current.Handler, Page)
+
+        strArquivoDestino = "Temp/" & Pagina.Session.SessionID & Now.ToString("ddMMyyyyhhmmss") & ".pdf"
+
+        crReportDocument.Load(Pagina.Server.MapPath("Relatorios/" & NomeRelatorio))
+
+        info.DatabaseName = ObterAtributoStringConexao(strStringConexao, "Initial Catalog")
+        info.UserID = ObterAtributoStringConexao(strStringConexao, "User id")
+        info.Password = ObterAtributoStringConexao(strStringConexao, "Password")
+        info.ServerName = ObterAtributoStringConexao(strStringConexao, "Data Source")
+
+        strDataBase = crReportDocument.Database
+        strTabelas = strDataBase.Tables
+
+        For Each strTabela In strTabelas
+            LoginBanco = strTabela.LogOnInfo
+            LoginBanco.ConnectionInfo = info
+            strTabela.ApplyLogOnInfo(LoginBanco)
+        Next
+
+        crReportDocument.SetDatabaseLogon(info.UserID, info.Password, info.ServerName, info.DatabaseName)
+
+        crReportDocument.RecordSelectionFormula = Filtro
+        crExportOptions = crReportDocument.ExportOptions
+        crDiskFileDestinationOptions.DiskFileName = Pagina.Server.MapPath(strArquivoDestino)
+
+        If Parametros IsNot Nothing Then
+            For Each x As ParametroRelatorio In Parametros
+                crReportDocument.SetParameterValue(x.Titulo, x.Valor)
+            Next
+        End If
+
+        With crReportDocument.ExportOptions
+            .ExportDestinationType = CrystalDecisions.Shared.ExportDestinationType.DiskFile
+            .DestinationOptions = crDiskFileDestinationOptions
+            .ExportFormatType = CrystalDecisions.Shared.ExportFormatType.PortableDocFormat
+        End With
+
+        Try
+            crReportDocument.Export()
+
+        Catch exp1 As CrystalDecisions.CrystalReports.Engine.LogOnException
+            'strErro = exp1.ToString
+
+        Finally
+            crReportDocument.Close()
+
+        End Try
+
+
+        Return strArquivoDestino 'retorna o pdf local
+    End Function
+
+    Private Shared Function ObterAtributoStringConexao(ByVal StringConexao As String, ByVal Atributo As String) As String
+        Return Mid(Mid(StringConexao, InStr(StringConexao, Atributo, CompareMethod.Text), InStr(InStr(StringConexao, Atributo, CompareMethod.Text), StringConexao, ";", CompareMethod.Text) - InStr(StringConexao, Atributo, CompareMethod.Text)), Len(Atributo) + 2)
+    End Function
+
+
+
+End Class
