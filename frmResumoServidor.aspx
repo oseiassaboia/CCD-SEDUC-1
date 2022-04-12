@@ -10,6 +10,8 @@
                 <!-- Small boxes (Stat box) -->
                 <div class="box">
 
+                    etetetet
+
                     <div class='row'>
                         <div class='col-sm-3'>
                             <div class="box-body">
