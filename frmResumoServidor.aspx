@@ -17,12 +17,9 @@
                             <div class="box-body">
                                 <div class="box box-primary">
                                     <div class="box-body box-profile">
-                                        <asp:Repeater ID="dtlProfessor" runat="server">
-                                            <ItemTemplate>
-                                                <%--<a href="frmImagemPerfil.aspx">--%>
-                                                    <img class="profile-user-img img-responsive img-circle" src='frmPrincipalFotos.aspx?idPessoa=<%# Eval("RH01_ID_PESSOA") %>' alt="User profile picture"></a>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                        
+
+                                        <div class="foto-usuario"></div>
 
                                         <h3 class="profile-username text-center">
                                             <asp:Label ID="lblNome" runat="server" />

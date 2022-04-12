@@ -54,6 +54,8 @@ Partial Class Habilidade
 
     End Sub
 
+
+
     Private Sub CarregarComboServidor()
         Dim objServidor As New Servidor
 
@@ -72,28 +74,6 @@ Partial Class Habilidade
         objServidor = Nothing
     End Sub
 
-    'Private Sub drpModalidade_SelectedIndexChanged(sender As Object, e As EventArgs) Handles drpModalidade.SelectedIndexChanged
-    '    If drpModalidade.SelectedValue > 0 Then
-    '        CarregarComboTabelaRelacionada(drpNivel, New Nivel, drpModalidade.SelectedValue, "...")
-    '        drpNivel.Enabled = True
-    '    Else
-    '        drpNivel.Enabled = False
-    '        drpEtapa.Enabled = False
-    '        drpNivel.ClearSelection()
-    '    End If
-
-    'End Sub
-    'Private Sub drpNivel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles drpNivel.SelectedIndexChanged
-
-    '    If drpNivel.SelectedValue > 0 Then
-    '        CarregarComboTabelaRelacionada(drpEtapa, New Etapa, drpNivel.SelectedValue, "...")
-    '        drpEtapa.Enabled = True
-    '    Else
-    '        drpEtapa.Enabled = False
-    '        drpEtapa.ClearSelection()
-    '    End If
-
-    'End Sub
 
     Private Sub btnNovo_Click(sender As Object, e As EventArgs) Handles btnNovo.Click
         limparcampos()
@@ -113,116 +93,7 @@ Partial Class Habilidade
 
     End Sub
 
-    Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
-        try
-            Salvar()
-            limparcampos()
-            CarregarGrid()
-            MsgBox(eTipoMensagem.SALVAR_SUCESSO)
-        Catch ex As Exception
-            MsgBox(eTipoMensagem.SALVAR_erro)
-        End Try
 
-    End Sub
-
-    Private Sub Salvar()
-
-        If (ViewState("CodigoHabilidadeServidor") Is Nothing) Then
-            With (New HabilidadeServidor).Pesquisar(,, drpServidor.SelectedValue, , drpDisciplina.SelectedValue, drpTipodeHabilidade.SelectedValue,,,,,,)
-                If .Rows.Count > 0 Then
-                    MsgBox("Já Existe um registro ativo para os itens selecionados. Por favor, edite o registro existente")
-                    Exit Sub
-                End If
-            End With
-            With (New HabilidadeServidor).Pesquisar(,, drpServidor.SelectedValue, , drpDisciplina.SelectedValue, 2,,,,,, False)
-                If .Rows.Count > 0 Then
-                    MsgBox("Já Existe um registro para os itens selecionados. Por favor, edite o registro existente")
-                    Exit Sub
-                End If
-            End With
-        End If
-
-
-        With (New HabilidadeServidor).Pesquisar(,, drpServidor.SelectedValue,,,,,,,,,)
-            'CASO SEJA A PRIMEIRA HABILIDADE, ELA NÃO PODE SER DESVIO (É OBRIGATÓRIO QUE AO MENOS UMA DISCIPLINA SEJA COMUM)
-            If .Rows.Count = 0 And drpTipodeHabilidade.SelectedValue = 2 Then
-                MsgBox("Pelo menos uma habilidade precisa ser do tipo Comum")
-                Exit Sub
-            End If
-        End With
-
-        ' CASO EDITANDO UMA HABILIDADE
-        If Not (ViewState("CodigoHabilidadeServidor") Is Nothing) Then
-
-            'VERIFICO AS HABILIDADES DO SERVIDOR
-            With (New HabilidadeServidor).Pesquisar(,, drpServidor.SelectedValue,,,,,,,,,)
-
-                'CASO O MESMO JÁ POSSUA HABILIDADES, VERIFICO SE O MESMO ESTÁ TENTANDO EDITAR PARA UMA TIPO "DESVIO"
-                If .Rows.Count > 0 And drpTipodeHabilidade.SelectedValue = 2 Then
-
-                    'ADICIONO UM CONTADOR PARA A QUANTIDADE DE HABILIDADES TIPO "DESVIO", INCLUINDO A NOVA QUE O MESMO ESTÁ TENTANDO ADICIONAR
-                    Dim desvioCount As Integer = 1
-
-                    'ITERO PELOS REGISTROS VERIFICANDO A QUANTIDADE DE HABILIDADES "DESVIO"
-                    For Each row As DataRow In .Rows
-                        If row("RH72_TP_HABILIDADE") = 2 Then
-
-                            'SE FOR DO TIPO DESVIO, ADICIONO NO CONTADOR
-                            desvioCount = desvioCount + 1
-                        End If
-                    Next
-
-                    'VERIFICO SE A QUANTIDADE DE REGISTROS, INCLUINDO O NOVO, DO TIPO DESVIO
-                    'SE TODOS OS VALORES FICARÃO SENDO DO TIPO "DESVIO", RETORNO UMA MENSAGEM POIS É NECESSÁRIO QUE PELO MENOS UMA HABILIDADE SEJA DO TIPO COMUM
-                    If desvioCount = .Rows.Count Then
-                        MsgBox("Pelo menos uma habilidade precisa ser do tipo COMUM")
-                        Exit Sub
-                    End If
-                End If
-            End With
-        End If
-
-
-
-
-        If drpTipodeHabilidade.SelectedValue = 1 Then
-            With (New HabilidadeServidor).Pesquisar(,, drpServidor.SelectedValue,,, drpTipodeHabilidade.SelectedValue)
-                If .Rows.Count > 0 Then
-                    MsgBox("Habilidade COMUM já cadastrada!")
-                    Exit Sub
-                End If
-            End With
-        End If
-
-        Dim objHabilidade As New HabilidadeServidor(ViewState("CodigoHabilidadeServidor"))
-
-        Using objHabilidade
-
-            objHabilidade.IdServidor = drpServidor.SelectedValue
-            'objHabilidade.IdEtapa = drpEtapa.SelectedValue
-            objHabilidade.IdDisciplina = drpDisciplina.SelectedValue
-            objHabilidade.TpHabilidade = drpTipodeHabilidade.SelectedValue
-
-            objHabilidade.IdUsuario = Session("CodigoUsuario")
-            objHabilidade.DataHoraCadastro = Date.Now
-
-            If Not ViewState("CodigoHabilidadeServidor") = Nothing Then
-                With New HabilidadeServidor().Pesquisar(, ViewState("CodigoHabilidadeServidor"))
-                    If .Rows.Count > 0 Then
-                        objHabilidade.IdDisciplina = .Rows(0)("DE09_ID_DISCIPLINA")
-                        objHabilidade.IdServidor = .Rows(0)("RH02_ID_SERVIDOR")
-                    End If
-
-                End With
-
-            End If
-
-            objHabilidade.Salvar()
-
-            MsgBox(eTipoMensagem.SALVAR_SUCESSO)
-
-        End Using
-    End Sub
 
     Private Sub grdHabilidade_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles grdHabilidade.RowDataBound
         Dim lnkCancelar As LinkButton
@@ -256,18 +127,38 @@ Partial Class Habilidade
         lnkCancelar = Nothing
         iCancelar = Nothing
     End Sub
-
     Private Sub grdHabilidade_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles grdHabilidade.RowCommand
         If e.CommandName = "Desvio" Then
-            TrocarTipoHabilidade(grdHabilidade.DataKeys(e.CommandArgument).Item(0))
-            limparcampos()
-            CarregarGrid()
+            MsgModal(2, "Deseja alterar o tipo de habilidade?")
+            btnEntendi.Text = "Não"
+            btnHabilidade.Text = "Sim"
+            btnHabilidade.Visible = True
+            ViewState("TipoHabilidade") = grdHabilidade.DataKeys(e.CommandArgument).Item(0)
         End If
 
 
         If e.CommandName = "" Then
 
         End If
+    End Sub
+
+    Private Sub MsgModal(Optional TipoMsg As Integer = 1, Optional Mensagem As String = "", Optional Mensagem2 As String = "")
+        'Parametros de tipo (1 = sucesso | 2 = aviso | 3 = erro)
+        If TipoMsg = 1 Then
+            ScriptManager.RegisterStartupScript(Me.Page, Me.Page.GetType, "openModal", "openModal('sucesso');", True)
+        ElseIf TipoMsg = 2 Then
+            ScriptManager.RegisterStartupScript(Me.Page, Me.Page.GetType, "openModal", "openModal('aviso');", True)
+        ElseIf TipoMsg = 3 Then
+            ScriptManager.RegisterStartupScript(Me.Page, Me.Page.GetType, "openModal", "openModal('erro');", True)
+        End If
+        lblMensagem.Text = Mensagem
+        lblMensagem2.Text = Mensagem2
+    End Sub
+
+    Private Sub btnHabilidade_Click(sender As Object, e As EventArgs) Handles btnHabilidade.Click
+        TrocarTipoHabilidade(ViewState("TipoHabilidade"))
+        limparcampos()
+        CarregarGrid()
     End Sub
 
     Private Sub CarregarHabilidadeServidor(Codigo As Integer)

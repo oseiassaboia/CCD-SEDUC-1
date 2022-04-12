@@ -45,8 +45,8 @@ Partial Class frmResumoServidor
     Private Sub CarregarImagem(ByVal Pessoa As Integer)
         Dim objDocumentoPessoa As New DocumentoPessoa
 
-        dtlProfessor.DataSource = objDocumentoPessoa.Pesquisar(,, Pessoa)
-        dtlProfessor.DataBind()
+        'dtlProfessor.DataSource = objDocumentoPessoa.Pesquisar(,, Pessoa)
+        'dtlProfessor.DataBind()
 
         objDocumentoPessoa = Nothing
 

@@ -68,8 +68,6 @@
                                                     </div>
                                             </ItemTemplate>
                                          </asp:TemplateField>
-<%--                                         <asp:ButtonField Text="DESATIVAR" CommandName="Desativar" />
-                                        <asp:ButtonField Text="Habilitar" CommandName="Habilitar" />--%>
                                     </Columns>
                                 </asp:GridView>
                                 <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
@@ -80,5 +78,27 @@
             </section>
         </ContentTemplate>
      </asp:UpdatePanel>
+    <%--Modal de confirmacao padrão--%>
+    <div class="modal fade" id="modalSucesso">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="txtHeaderModal"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="h4">
+                        <asp:Label runat="server" ID="lblMensagem"></asp:Label></p>
+                    <p class="h5">
+                        <asp:Label runat="server" ID="lblMensagem2"></asp:Label></p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton id="btnHabilidade" runat="server" visible="false" type="button"  class="btn btn-primary"> Ok</asp:LinkButton>
+                    <asp:LinkButton id="btnEntendi" runat="server" class="btn btn-primary" data-dismiss="modal"> Entendi</asp:LinkButton>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 
